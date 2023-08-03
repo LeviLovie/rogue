@@ -3,11 +3,13 @@
 
 #include <iostream>
 
-extern std::string LevelInfo;
-extern std::string LevelWarn;
-extern std::string LevelError;
+namespace Logger {
+    extern std::string LevelInfo;
+    extern std::string LevelWarn;
+    extern std::string LevelError;
 
-void Log(std::string, std::string);
-void LogUncolored(std::string, std::string);
+    void Log(std::string, std::string);
+    void LogUncolored(std::string, std::string);
+}
 
 #endif
