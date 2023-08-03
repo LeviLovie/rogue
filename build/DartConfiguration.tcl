@@ -28,7 +28,7 @@ NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
 ConfigureCommand: "/usr/local/Cellar/cmake/3.27.1/bin/cmake" "/Users/levi/Dev/GitHub/rogue"
-MakeCommand: /usr/local/Cellar/cmake/3.27.1/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
+MakeCommand: /usr/local/Cellar/cmake/3.27.1/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
 # version control
