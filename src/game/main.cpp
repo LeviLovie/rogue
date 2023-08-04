@@ -3,20 +3,16 @@
 #include <thread>
 #include <SFML/Graphics.hpp>
 #include "../utils/logger/main.h"
-#include "ubuntu_font.h"
+#include "assets.h"
+#include "tilemap.h"
 using namespace std;
 
 namespace Game {
     void UpdateScreen(sf::RenderWindow& window, int width, int height) {
-        sf::Text text;
-        sf::Font font; if (!font.loadFromMemory(ubuntu_ttf, ubuntu_ttf_len)) {Logger::Log(Logger::LevelError, "Font file not found"); exit(1);}
-        text.setFont(font);
-        text.setString("Hello, world!");
-        text.setCharacterSize(12);
-        text.setFillColor(sf::Color::White);
-        window.draw(text);
+        sf::Texture texture_1; texture_1.loadFromMemory(asset_one_png, asset_one_png_len);
+        sf::Texture texture_2; texture_2.loadFromMemory(asset_two_png, asset_two_png_len);
+        
     }
-
     void StartGame() {
         sf::RenderWindow window(sf::VideoMode(1024, 720), "Rogue");
         Logger::Log(Logger::LevelInfo, "Window has been started, " + to_string(window.getSize().x) + "|" + to_string(window.getSize().y));

@@ -71,7 +71,8 @@
         "iomanip": "cpp",
         "stack": "cpp",
         "__tree": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "thread": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

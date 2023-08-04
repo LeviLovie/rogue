@@ -6,9 +6,6 @@ enable_testing()
 
 file(GLOB_RECURSE SOURCES
     "src/*.cpp" "src/*.h"
-    "src/utils/logger/*.cpp" "src/utils/logger/*.h"
-    "src/utils/snl/*.cpp" "src/utils/snl/*.h"
-    "src/window/*.cpp" "src/window/*.h"
 )
 add_executable(rogue ${SOURCES})
 
