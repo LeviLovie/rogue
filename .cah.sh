@@ -5,7 +5,7 @@
 rad="./assets"
 # Header assets directory
 had="./src/assets"
-chaf="./src/assets.h"
+chaf="./src/aseets/assets.h"
 
 # Check directories exists
 if [ ! -d "$rad" ]; then

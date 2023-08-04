@@ -1,17 +1,21 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <SFML/Graphics.hpp>
+#include <sfml/Graphics.hpp>
 #include "../utils/logger/main.h"
-#include "assets.h"
-#include "tilemap.h"
+#include "../assets/ubuntu-font.ttf.h"
 using namespace std;
 
 namespace Game {
     void UpdateScreen(sf::RenderWindow& window, int width, int height) {
-        sf::Texture texture_1; texture_1.loadFromMemory(asset_one_png, asset_one_png_len);
-        sf::Texture texture_2; texture_2.loadFromMemory(asset_two_png, asset_two_png_len);
-        
+        sf::Text text;
+        sf::Font font;
+        if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {Logger::Log(Logger::LevelError, "Font can't be loaded correctly from memory.");}
+        text.setFont(font);
+        text.setString("Hello world!");
+        text.setCharacterSize(24);
+        text.setFillColor(sf::Color::White);
+        window.draw(text);
     }
     void StartGame() {
         sf::RenderWindow window(sf::VideoMode(1024, 720), "Rogue");
