@@ -2,7 +2,7 @@
 #include <chrono>
 #include <thread>
 #include <sfml/Graphics.hpp>
-#include "../utils/logger/main.h"
+#include "../utils/logger.hpp"
 #include "../assets/ubuntu-font.ttf.h"
 using namespace std;
 

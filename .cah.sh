@@ -2,7 +2,7 @@
 # Creates a header file for every asset in src/assets from assets/. And combines it all together into a single header file.
 
 # Row assets directory
-rad="./assets"
+rad="./rawassets"
 # Header assets directory
 had="./src/assets"
 chaf="./src/aseets/assets.h"

@@ -1,8 +1,7 @@
 #include <iostream>
 using namespace std;
-#include "utils/logger/main.h"
-#include "utils/snl/main.h"
-#include "game/main.h"
+#include "utils/logger.hpp"
+#include "game/main.hpp"
 
 int main(int, char**){
     Logger::Log(Logger::LevelInfo, "Application has been started");
