@@ -4,18 +4,17 @@
 #include <sfml/Graphics.hpp>
 #include "../utils/logger.hpp"
 #include "../assets/ubuntu-font.ttf.h"
+#include "../objects/text.hpp"
 using namespace std;
 
 namespace Game {
     void UpdateScreen(sf::RenderWindow& window, int width, int height) {
-        sf::Text text;
         sf::Font font;
-        if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {Logger::Log(Logger::LevelError, "Font can't be loaded correctly from memory.");}
-        text.setFont(font);
-        text.setString("Hello world!");
-        text.setCharacterSize(24);
-        text.setFillColor(sf::Color::White);
-        window.draw(text);
+        if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {
+            Logger::Log(Logger::LevelError, "Font can't be loaded correctly from memory.");
+        }
+        Text text("Hello World!", 0, 0, 20, sf::Color::White, font);
+        text.Draw(window);
     }
     void StartGame() {
         sf::RenderWindow window(sf::VideoMode(1024, 720), "Rogue");
