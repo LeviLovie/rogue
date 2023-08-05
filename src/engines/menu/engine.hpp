@@ -8,7 +8,7 @@
 #include "../../assets/ubuntu-font.ttf.h"
 using namespace std;
 
-inline int EnginesTestUpdate(sf::RenderWindow* window, int width, int height, int iteration) {
+inline int EnginesMenuUpdate(sf::RenderWindow* window, int width, int height, int iteration) {
     sf::Font font;
     if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {return 1;}
 
@@ -22,7 +22,7 @@ inline int EnginesTestUpdate(sf::RenderWindow* window, int width, int height, in
     window->draw(title);
     return 0;
 }
-inline int EnginesTestRun(sf::RenderWindow* Window, int Width, int Height, float TargetFPS) {
+inline int EnginesMenuRun(sf::RenderWindow* Window, int Width, int Height, float TargetFPS) {
     const double targetFrameTime = 1000.0 / TargetFPS;
     bool tooSlow = false;
     int result = 0;
@@ -33,7 +33,7 @@ inline int EnginesTestRun(sf::RenderWindow* Window, int Width, int Height, float
         startTime = chrono::high_resolution_clock::now();
         Window->clear();
 
-        result = EnginesTestUpdate(Window, Window->getSize().x, Window->getSize().y, iteration);
+        result = EnginesMenuUpdate(Window, Window->getSize().x, Window->getSize().y, iteration);
         if (result > 0) {return result;}
 
         sf::Event event;
