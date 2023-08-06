@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "../../utils/logger.hpp"
 #include "../../assets/ubuntu-font.ttf.hpp"
+#include "../menu/engine.hpp"
 using namespace std;
 
 #define MENU_POINTER_Y_START 5 + 64 + 10
@@ -20,18 +21,36 @@ inline int EnginesSettingsUpdate(sf::RenderWindow* Window, int width, int height
     sf::Font font; if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {return 1;}
     sf::RectangleShape background = CreateRectangle(0, 0, width, height, sf::Color::White); Window->draw(background);
 
-    sf::Text title(font); title = CreateText("Settings", 64, 0, 0, sf::Color::Black); Window->draw(title);
-    sf::Text usage(font); title = CreateText("[W]/[S] [Up]/[Down] - Move\n[Enter] - Use option\n[A]/[D] [Left][Right] - Change slider/list value\n[Space] - Change check value", 14, 5, 720 - (14 * 4) - 5 - 10, sf::Color::Black); Window->draw(usage);
+    sf::Text title(font); title.setFont(font); title.setCharacterSize(64); title.setFillColor(sf::Color::Black);
+    const sf::Vector2f title_position(0, 0); title.setPosition(title_position);
+    title.setString("Settings"); Window->draw(title);
+
+    sf::Text usage(font); usage.setFont(font); usage.setCharacterSize(14); usage.setFillColor(sf::Color::Black);
+    const sf::Vector2f usage_position(5, 720 - (14 * 4) - 5 - 10); usage.setPosition(usage_position);
+    usage.setString("[W]/[S] [Up]/[Down] - Move\n[Enter] - Use option\n[A]/[D] [Left][Right] - Change slider/list value\n[Space] - Change check value");
+    Window->draw(usage);
 
     int menu_item_sprite_size = MENU_ITEM_Y_SIZE - (MENU_ITEM_MARGIN * 2); sf::RectangleShape menu_pointer_shape;
     menu_pointer_shape.setPosition(sf::Vector2f(MENU_POINTER_X_START, (menuPointer * MENU_ITEM_Y_SIZE) + MENU_POINTER_Y_START - (MENU_ITEM_MARGIN / 2)));
     menu_pointer_shape.setSize(sf::Vector2f(menu_item_sprite_size, menu_item_sprite_size)); menu_pointer_shape.setFillColor(sf::Color::Black); Window->draw(menu_pointer_shape);
 
-    sf::Text menu_items[MENU_ITEMS_COUNT] = {
-        CreateText("Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64, sf::Color::Black),
-        CreateText("Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + MENU_ITEM_Y_SIZE, sf::Color::Black),
-        CreateText("Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + (MENU_ITEM_Y_SIZE * 2), sf::Color::Black)
-    }; for (int i = 0; i < MENU_ITEMS_COUNT; i++) {Window->draw(menu_items[i]);}
+    // sf::Text menu_items[MENU_ITEMS_COUNT] = {
+    //     CreateText("Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64, sf::Color::Black),
+    //     CreateText("Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + MENU_ITEM_Y_SIZE, sf::Color::Black),
+    //     CreateText("Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + (MENU_ITEM_Y_SIZE * 2), sf::Color::Black)
+    // }; for (int i = 0; i < MENU_ITEMS_COUNT; i++) {Window->draw(menu_items[i]);}
+
+    sf::Text menu_item_one(font); menu_item_one.setFont(font); menu_item_one.setCharacterSize(MENU_ITEM_Y_SIZE); menu_item_one.setFillColor(sf::Color::Black);
+    const sf::Vector2f menu_item_one_position(MENU_ITEM_Y_SIZE, 64); menu_item_one.setPosition(menu_item_one_position);
+    menu_item_one.setString("Back"); Window->draw(menu_item_one);
+
+    sf::Text menu_item_two(font); menu_item_two.setFont(font); menu_item_two.setCharacterSize(MENU_ITEM_Y_SIZE); menu_item_two.setFillColor(sf::Color::Black);
+    const sf::Vector2f menu_item_two_position(MENU_ITEM_Y_SIZE, 64 + MENU_ITEM_Y_SIZE); menu_item_two.setPosition(menu_item_two_position);
+    menu_item_two.setString("Back"); Window->draw(menu_item_two);
+
+    sf::Text menu_item_three(font); menu_item_three.setFont(font); menu_item_three.setCharacterSize(MENU_ITEM_Y_SIZE); menu_item_three.setFillColor(sf::Color::Black);
+    const sf::Vector2f menu_item_three_position(MENU_ITEM_Y_SIZE, 64 + (MENU_ITEM_Y_SIZE * 2)); menu_item_three.setPosition(menu_item_three_position);
+    menu_item_three.setString("Back"); Window->draw(menu_item_three);
 
     return 0;
 }
