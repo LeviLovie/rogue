@@ -31,7 +31,9 @@ using namespace std;
 //     }
 // }
 inline int EnginesGamesUpdate(sf::RenderWindow* Window, int width, int height, int iteration, int menuPointer) {
-    sf::Texture texture; texture.loadFromMemory(rawassets_sprite_one_png, rawassets_sprite_one_png_len);
+    sf::Texture texture;
+    auto result = texture.loadFromMemory(rawassets_sprite_one_png, rawassets_sprite_one_png_len);
+    // cout << result << endl;
     sf::RectangleShape sprite = CreateRectangle(10, 10, SPRITE_SIZE * SPRITE_UPSCAE, SPRITE_SIZE * SPRITE_UPSCAE, sf::Color::White);
     sprite.setTexture(&texture);
     Window->draw(sprite);

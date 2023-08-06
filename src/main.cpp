@@ -4,12 +4,14 @@
 #include "engines/license/engine.hpp"
 #include "engines/settings/engine.hpp"
 #include "engines/game/engine.hpp"
+#include "SFML/Graphics.hpp"
 using namespace std;
 using namespace Logger;
 
 int main(int, char**){
     Log(LevelInfo, "Application has been started");
-    sf::RenderWindow window(sf::VideoMode(1024, 720), "Rogue");
+    sf::Vector2u size(1024, 720);
+    sf::RenderWindow window(sf::VideoMode(size), "Rogue");
     Log(LevelInfo, "Window has been started, " + to_string(window.getSize().x) + "|" + to_string(window.getSize().y));
 
     int state = 5;

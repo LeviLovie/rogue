@@ -16,9 +16,15 @@ using namespace std;
 
 #define MENU_ITEMS_COUNT 3
 
-sf::Text CreateText(sf::Font* font, string text, int size, int x, int y, sf::Color color) {
-    sf::Text result; result.setFont(*font); result.setCharacterSize(size); result.setFillColor(color);
-    result.setPosition(x, y); result.setString(text); return result;
+sf::Text CreateText(string text, int size, float x, float y, sf::Color color) {
+    sf::Font font; if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {exit(1);}
+    const sf::Font font_const = font;
+    sf::Text result(font_const);
+    result.setFont(font); result.setCharacterSize(size); result.setFillColor(color);
+    const sf::Vector2f position(x, y);
+    result.setPosition(position);
+    result.setString(text);
+    return result;
 }
 sf::RectangleShape CreateRectangle(int x, int y, int width, int height, sf::Color color) {
     sf::RectangleShape result; result.setPosition(sf::Vector2f(x, y)); result.setSize(sf::Vector2f(width, height));
@@ -28,18 +34,18 @@ sf::RectangleShape CreateRectangle(int x, int y, int width, int height, sf::Colo
 inline int EnginesMenuUpdate(sf::RenderWindow* Window, int width, int height, int iteration, int menuPointer) {
     sf::Font font; if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {return 1;}
     sf::RectangleShape background = CreateRectangle(0, 0, width, height, sf::Color::White); Window->draw(background);
-
-    sf::Text title = CreateText(&font, "Rogue", 64, 0, 0, sf::Color::Black); Window->draw(title);
-    sf::Text usage = CreateText(&font, "[W]/[S] [Up]/[Down] - Move\n[Enter] - Use option\n[A]/[D] [Left][Right] - Change slider/list value\n[Space] - Change check value", 14, 5, 720 - (14 * 4) - 5 - 10, sf::Color::Black); Window->draw(usage);
+    
+    sf::Text title(font); title = CreateText("Rogue", 64, 0.0f, 0.0f, sf::Color::Black); Window->draw(title);
+    sf::Text usage(font); usage = CreateText("[W]/[S] [Up]/[Down] - Move\n[Enter] - Use option\n[A]/[D] [Left][Right] - Change slider/list value\n[Space] - Change check value", 14, 5.0f, 720.0f - (14.0f * 4.0f) - 5.0f - 10.0f, sf::Color::Black); Window->draw(usage);
 
     int menu_item_sprite_size = MENU_ITEM_Y_SIZE - (MENU_ITEM_MARGIN * 2); sf::RectangleShape menu_pointer_shape;
     menu_pointer_shape.setPosition(sf::Vector2f(MENU_POINTER_X_START, (menuPointer * MENU_ITEM_Y_SIZE) + MENU_POINTER_Y_START - (MENU_ITEM_MARGIN / 2)));
     menu_pointer_shape.setSize(sf::Vector2f(menu_item_sprite_size, menu_item_sprite_size)); menu_pointer_shape.setFillColor(sf::Color::Black); Window->draw(menu_pointer_shape);
 
     sf::Text menu_items[MENU_ITEMS_COUNT] = {
-        CreateText(&font, "Start",   MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64, sf::Color::Black),
-        CreateText(&font, "Options", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + MENU_ITEM_Y_SIZE, sf::Color::Black),
-        CreateText(&font, "Exit",    MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + (MENU_ITEM_Y_SIZE * 2), sf::Color::Black)
+        CreateText("Start",   MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64, sf::Color::Black),
+        CreateText("Options", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + MENU_ITEM_Y_SIZE, sf::Color::Black),
+        CreateText("Exit",    MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + (MENU_ITEM_Y_SIZE * 2), sf::Color::Black)
     }; for (int i = 0; i < MENU_ITEMS_COUNT; i++) {Window->draw(menu_items[i]);}
 
     return 0;
