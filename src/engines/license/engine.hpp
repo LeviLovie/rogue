@@ -1,29 +1,32 @@
+#ifndef ENGINES_LICENSE_ENGINE_HPP
+#define ENGINES_LICENSE_ENGINE_HPP
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "../../utils/logger.hpp"
-#include "../../assets/ubuntu-font.ttf.h"
+#include "../../assets/ubuntu-font.ttf.hpp"
 using namespace std;
+using namespace sf;
 
 inline int EnginesLicenseUpdate(sf::RenderWindow* window, int width, int height, int iteration) {
-    sf::Font font;
-    if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {return 1;}
-
     sf::RectangleShape background(sf::Vector2f(0, 0));
     background.setSize(sf::Vector2f(width, height));
     background.setFillColor(sf::Color::White);
     window->draw(background);
 
-    sf::Text title; title.setFont(font); title.setCharacterSize(24); title.setFillColor(sf::Color::Red); title.setPosition(10, 6);
+    sf::Font font; if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {return 1;}
+    const sf::Font font_const = font;
+
+    Text title(font); title.setCharacterSize(24); title.setFillColor(Color::Red); title.setPosition(sf::Vector2f(10, 6));
     title.setString("Rogue License");
     window->draw(title);
 
-    sf::Text exit_title; exit_title.setFont(font); exit_title.setCharacterSize(20); exit_title.setFillColor(sf::Color::Red); exit_title.setPosition(10, 32);
+    Text exit_title(font); exit_title.setCharacterSize(20); exit_title.setFillColor(Color::Red); exit_title.setPosition(sf::Vector2f(10, 32));
     exit_title.setString("If you accept it, press any key. Else close the application ([ESC]).");
     window->draw(exit_title);
 
-    sf::Text licenseText; licenseText.setFont(font); licenseText.setCharacterSize(14); licenseText.setFillColor(sf::Color::Black); licenseText.setPosition(10, 64);
+    Text licenseText(font); licenseText.setCharacterSize(14); licenseText.setFillColor(sf::Color::Black); licenseText.setPosition(sf::Vector2f(10, 64));
     licenseText.setString("MIT License\n\nCopyright (c) 2023 leviiloviee\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n");
     window->draw(licenseText);
 
@@ -47,7 +50,7 @@ inline int EnginesLicenseRun(sf::RenderWindow* Window, int Width, int Height, fl
         while (Window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {Window->close();}
             if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Escape) {Window->close();}
+                if (event.key.code == sf::Keyboard::Escape) {exit(0);}
                 else {return 3;}
             }
         }
@@ -63,3 +66,5 @@ inline int EnginesLicenseRun(sf::RenderWindow* Window, int Width, int Height, fl
     }
     return 0;
 }
+
+#endif
