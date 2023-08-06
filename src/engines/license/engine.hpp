@@ -3,7 +3,7 @@
 #include <thread>
 #include <sfml/Graphics.hpp>
 #include "../../utils/logger.hpp"
-#include "../../assets/ubuntu-font.ttf.h"
+#include "../../assets/ubuntu-font.ttf.hpp"
 using namespace std;
 
 inline int EnginesLicenseUpdate(sf::RenderWindow* window, int width, int height, int iteration) {
@@ -47,7 +47,7 @@ inline int EnginesLicenseRun(sf::RenderWindow* Window, int Width, int Height, fl
         while (Window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {Window->close();}
             if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Escape) {Window->close();}
+                if (event.key.code == sf::Keyboard::Escape) {exit(0);}
                 else {return 3;}
             }
         }
