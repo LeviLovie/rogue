@@ -13,6 +13,5 @@ _deps
 .DS_Store
 .vscode
 
-build/*
-./build/
-build/SFML/
+build
+build/SFML
