@@ -1,9 +1,11 @@
+#ifndef TEXT_HPP
+#define TEXT_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
 using namespace std;
 
 // Class made to make using text simpler
-class Text {
+class ObjectText {
     private:
         sf::Text _text;
     public:
@@ -11,7 +13,7 @@ class Text {
         sf::Color color;
         sf::Font font;
         string content;
-        Text(string content, int x, int y, int size, sf::Color color, sf::Font font) {
+        ObjectText(string content, int x, int y, int size, sf::Color color, sf::Font font) {
             this->content = content;
             this->x = x;
             this->y = y;
@@ -36,3 +38,5 @@ class Text {
         string GetTextContent() {return content; UpdateTextObject();}
         void SetTextContent(string content) {this->content = content;}
 };
+
+#endif
