@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include "../../utils/logger.hpp"
 #include "../../assets/ubuntu-font.ttf.hpp"
@@ -19,11 +20,11 @@ using namespace std;
 inline void DrawWorldChunk(sf::RenderWindow* Window, short data[CHUNK_SIZE][CHUNK_SIZE], int x, int y) {
     for (int i = 0; i < CHUNK_SIZE; i++) {
         for (int j = 0; j < CHUNK_SIZE; j++) {
-            if (data[j][i] == 2) {
+            if (data[j][i] == 1) {
                 sf::Texture texture; auto result = texture.loadFromMemory(rawassets_sprite_one_png, rawassets_sprite_one_png_len);
                 sf::RectangleShape sprite = CreateRectangle(x + (i * SPRITE_SIZE_PIXELS), y + (j * SPRITE_SIZE_PIXELS), SPRITE_SIZE_PIXELS, SPRITE_SIZE_PIXELS, sf::Color::White);
                 sprite.setTexture(&texture); Window->draw(sprite);
-            } else if (data[j][i] == 1) {
+            } else if (data[j][i] == -1) {
                 sf::Texture texture; auto result = texture.loadFromMemory(rawassets_sprite_two_png, rawassets_sprite_two_png_len);
                 sf::RectangleShape sprite = CreateRectangle(x + (i * SPRITE_SIZE_PIXELS), y + (j * SPRITE_SIZE_PIXELS), SPRITE_SIZE_PIXELS, SPRITE_SIZE_PIXELS, sf::Color::White);
                 sprite.setTexture(&texture); Window->draw(sprite);
@@ -31,14 +32,17 @@ inline void DrawWorldChunk(sf::RenderWindow* Window, short data[CHUNK_SIZE][CHUN
         }
     }
 }
-inline int EnginesGamesUpdate(sf::RenderWindow* Window, int width, int height, int iteration, int player_tiles_x_pos, int player_tiles_y_pos) {
-    DrawWorldChunk(Window, chunk, 0, 0);
 
-    int player_pixels_y_pos = player_tiles_y_pos * SPRITE_SIZE_PIXELS;
-    int player_pixels_x_pos = player_tiles_x_pos * SPRITE_SIZE_PIXELS;
-    sf::RectangleShape player_sprite; player_sprite = CreateRectangle(player_pixels_x_pos, player_pixels_y_pos, SPRITE_SIZE_PIXELS, SPRITE_SIZE_PIXELS, sf::Color::Red); Window->draw(player_sprite);
+inline int EnginesGamesUpdate(sf::RenderWindow* Window, int width, int height, int iteration, int player_tiles_x_pos, int player_tiles_y_pos) {
+    int center_pixels_y_pos = ((height - SPRITE_SIZE_PIXELS) / 2 - 20);
+    int center_pixels_x_pos = ((width - SPRITE_SIZE_PIXELS) / 2);
+
+    DrawWorldChunk(Window, chunk, center_pixels_x_pos - (player_tiles_x_pos * SPRITE_SIZE_PIXELS), center_pixels_y_pos - (player_tiles_y_pos * SPRITE_SIZE_PIXELS));
+
+    sf::RectangleShape player_sprite; player_sprite = CreateRectangle(center_pixels_x_pos, center_pixels_y_pos, SPRITE_SIZE_PIXELS, SPRITE_SIZE_PIXELS, sf::Color::Red); Window->draw(player_sprite);
     return 0;
 }
+
 inline int EnginesGamesRun(sf::RenderWindow* Window, int Width, int Height, float TargetFPS) {
     const double targetFrameTime = 1000.0 / TargetFPS;
     bool tooSlow = false; int result, iteration = 0;
@@ -54,11 +58,19 @@ inline int EnginesGamesRun(sf::RenderWindow* Window, int Width, int Height, floa
         while (Window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {exit(0);}
             else if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::A) {player_x--;}
-                else if (event.key.code == sf::Keyboard::D) {player_x++;}
-                else if (event.key.code == sf::Keyboard::W) {player_y--;}
-                else if (event.key.code == sf::Keyboard::S) {player_y++;}
-                else if (event.key.code == sf::Keyboard::Escape) {return 3;}
+                if (event.key.code == sf::Keyboard::Escape) {return 3;}
+                else if (event.key.code == sf::Keyboard::A) {
+                    if (chunk[player_y][player_x - 1] < 0) {player_x--;}
+                }
+                else if (event.key.code == sf::Keyboard::D) {
+                    if (chunk[player_y][player_x + 1] < 0) {player_x++;}
+                }
+                else if (event.key.code == sf::Keyboard::W) {
+                    if (chunk[player_y - 1][player_x] < 0) {player_y--;}
+                }
+                else if (event.key.code == sf::Keyboard::S) {
+                    if (chunk[player_y + 1][player_x] < 0) {player_y++;}
+                }
             }
         }
 
