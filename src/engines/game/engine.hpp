@@ -9,6 +9,7 @@
 #include "../../assets/ubuntu-font.ttf.hpp"
 #include "../../assets/sprite_one.png.hpp"
 #include "../../assets/sprite_two.png.hpp"
+#include "../../assets/player.png.hpp"
 #include "../menu/engine.hpp"
 #include "chunks.hpp"
 using namespace std;
@@ -39,7 +40,9 @@ inline int EnginesGamesUpdate(sf::RenderWindow* Window, int width, int height, i
 
     DrawWorldChunk(Window, chunk, center_pixels_x_pos - (player_tiles_x_pos * SPRITE_SIZE_PIXELS), center_pixels_y_pos - (player_tiles_y_pos * SPRITE_SIZE_PIXELS));
 
-    sf::RectangleShape player_sprite; player_sprite = CreateRectangle(center_pixels_x_pos, center_pixels_y_pos, SPRITE_SIZE_PIXELS, SPRITE_SIZE_PIXELS, sf::Color::Red); Window->draw(player_sprite);
+    sf::Texture player_texture; auto result = player_texture.loadFromMemory(rawassets_player_png, rawassets_player_png_len);
+    sf::RectangleShape player_sprite = CreateRectangle(center_pixels_x_pos, center_pixels_y_pos, SPRITE_SIZE_PIXELS, SPRITE_SIZE_PIXELS, sf::Color::White);
+    player_sprite.setTexture(&player_texture); Window->draw(player_sprite);
     return 0;
 }
 

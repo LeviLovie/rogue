@@ -8,7 +8,7 @@
 using namespace std;
 using namespace Logger;
 
-int main(int, char**){
+int main(int, char**) {
     Log(LevelInfo, "Application has been started");
     sf::Vector2u size(1024, 720);
     sf::RenderWindow window(sf::VideoMode(size), "Rogue");
