@@ -1,7 +1,9 @@
+#ifndef ENGINES_LICENSE_ENGINE_HPP
+#define ENGINES_LICENSE_ENGINE_HPP
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "../../utils/logger.hpp"
 #include "../../assets/ubuntu-font.ttf.hpp"
 using namespace std;
@@ -63,3 +65,5 @@ inline int EnginesLicenseRun(sf::RenderWindow* Window, int Width, int Height, fl
     }
     return 0;
 }
+
+#endif

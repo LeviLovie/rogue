@@ -1,5 +1,5 @@
-#ifndef ENGINES_MENU_ENGINE_HPP
-#define ENGINES_MENU_ENGINE_HPP
+#ifndef ENGINES_SETTINGS_ENGINE_HPP
+#define ENGINES_SETTINGS_ENGINE_HPP
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -16,20 +16,11 @@ using namespace std;
 
 #define MENU_ITEMS_COUNT 3
 
-sf::Text CreateText(sf::Font* font, string text, int size, int x, int y, sf::Color color) {
-    sf::Text result; result.setFont(*font); result.setCharacterSize(size); result.setFillColor(color);
-    result.setPosition(x, y); result.setString(text); return result;
-}
-sf::RectangleShape CreateRectangle(int x, int y, int width, int height, sf::Color color) {
-    sf::RectangleShape result; result.setPosition(sf::Vector2f(x, y)); result.setSize(sf::Vector2f(width, height));
-    result.setFillColor(color); return result;
-}
-
-inline int EnginesMenuUpdate(sf::RenderWindow* Window, int width, int height, int iteration, int menuPointer) {
+inline int EnginesSettingsUpdate(sf::RenderWindow* Window, int width, int height, int iteration, int menuPointer) {
     sf::Font font; if (!font.loadFromMemory(__assets_ubuntu_font_ttf, __assets_ubuntu_font_ttf_len)) {return 1;}
     sf::RectangleShape background = CreateRectangle(0, 0, width, height, sf::Color::White); Window->draw(background);
 
-    sf::Text title = CreateText(&font, "Rogue", 64, 0, 0, sf::Color::Black); Window->draw(title);
+    sf::Text title = CreateText(&font, "Settings", 64, 0, 0, sf::Color::Black); Window->draw(title);
     sf::Text usage = CreateText(&font, "[W]/[S] [Up]/[Down] - Move\n[Enter] - Use option\n[A]/[D] [Left][Right] - Change slider/list value\n[Space] - Change check value", 14, 5, 720 - (14 * 4) - 5 - 10, sf::Color::Black); Window->draw(usage);
 
     int menu_item_sprite_size = MENU_ITEM_Y_SIZE - (MENU_ITEM_MARGIN * 2); sf::RectangleShape menu_pointer_shape;
@@ -37,14 +28,14 @@ inline int EnginesMenuUpdate(sf::RenderWindow* Window, int width, int height, in
     menu_pointer_shape.setSize(sf::Vector2f(menu_item_sprite_size, menu_item_sprite_size)); menu_pointer_shape.setFillColor(sf::Color::Black); Window->draw(menu_pointer_shape);
 
     sf::Text menu_items[MENU_ITEMS_COUNT] = {
-        CreateText(&font, "Start",   MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64, sf::Color::Black),
-        CreateText(&font, "Options", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + MENU_ITEM_Y_SIZE, sf::Color::Black),
-        CreateText(&font, "Exit",    MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + (MENU_ITEM_Y_SIZE * 2), sf::Color::Black)
+        CreateText(&font, "Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64, sf::Color::Black),
+        CreateText(&font, "Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + MENU_ITEM_Y_SIZE, sf::Color::Black),
+        CreateText(&font, "Back", MENU_ITEM_Y_SIZE, menu_item_sprite_size + MENU_ITEM_X_START, 64 + (MENU_ITEM_Y_SIZE * 2), sf::Color::Black)
     }; for (int i = 0; i < MENU_ITEMS_COUNT; i++) {Window->draw(menu_items[i]);}
 
     return 0;
 }
-inline int EnginesMenuRun(sf::RenderWindow* Window, int Width, int Height, float TargetFPS) {
+inline int EnginesSettingsRun(sf::RenderWindow* Window, int Width, int Height, float TargetFPS) {
     const double targetFrameTime = 1000.0 / TargetFPS;
     bool tooSlow = false;
     int result = 0;
@@ -63,15 +54,14 @@ inline int EnginesMenuRun(sf::RenderWindow* Window, int Width, int Height, float
                 if      (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) {if (menuPointer > 0) {menuPointer--;}}
                 else if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) {if (menuPointer < MENU_ITEMS_COUNT - 1) {menuPointer++;}}
                 else if (event.key.code == sf::Keyboard::Enter) {
-                    printf("Menu pointer: %d\n", menuPointer);
-                    if      (menuPointer == 0) {return 5;}
-                    else if (menuPointer == 1) {return 4;}
-                    else if (menuPointer == 2) {return 1;}
+                    if      (menuPointer == 0) {return 3;}
+                    else if (menuPointer == 1) {return 3;}
+                    else if (menuPointer == 2) {return 3;}
                 }
             }
         }
 
-        result = EnginesMenuUpdate(Window, Window->getSize().x, Window->getSize().y, iteration, menuPointer);
+        result = EnginesSettingsUpdate(Window, Window->getSize().x, Window->getSize().y, iteration, menuPointer);
         if (result > 0) {return result;}
 
         iteration++;
