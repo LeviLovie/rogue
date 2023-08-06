@@ -8,6 +8,7 @@
 #include "../../assets/ubuntu-font.ttf.hpp"
 #include "../../assets/sprite_one.png.hpp"
 #include "../../assets/sprite_two.png.hpp"
+#include "../menu/engine.hpp"
 using namespace std;
 
 #define SPRITE_SIZE 16

@@ -10,8 +10,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .run.sh
-# build
-# build/*
+build/
+build/*
 .DS_Store
 .vscode
-# SFML
